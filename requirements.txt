@@ -1,0 +1,10 @@
+pandas==2.2.3
+sqlalchemy==2.0.36
+psycopg2-binary==2.9.11
+python-dotenv==1.0.1
+boto3==1.34.34
+plotly==5.18.0
+snowflake-sqlalchemy==1.5.1
+dbt-core==1.7.6
+dbt-postgres==1.7.6
+apache-airflow==2.8.1
