@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies ETL Pipeline — Analytics Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont,
+                         'Segoe UI', Roboto, sans-serif;
+            background: #0f1117;
+            color: #e0e0e0;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1f2e 0%, #16213e 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid #2d3561;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #8892b0;
+            font-size: 1.1em;
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .badge {
+            background: #2d3561;
+            color: #64ffda;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .pipeline {
+            background: #1a1f2e;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid #2d3561;
+        }
+
+        .pipeline h2 {
+            color: #64ffda;
+            margin-bottom: 15px;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            font-size: 0.95em;
+        }
+
+        .pipeline-step {
+            background: #2d3561;
+            color: #ccd6f6;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        .pipeline-arrow {
+            color: #64ffda;
+            font-size: 1.2em;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 30px 20px;
+            background: #161b27;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #2d3561;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #64ffda;
+        }
+
+        .stat-label {
+            color: #8892b0;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .charts-grid {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .chart-card {
+            background: #1a1f2e;
+            border-radius: 12px;
+            border: 1px solid #2d3561;
+            overflow: hidden;
+        }
+
+        .chart-header {
+            padding: 20px 25px 10px;
+            border-bottom: 1px solid #2d3561;
+        }
+
+        .chart-header h3 {
+            color: #ccd6f6;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .chart-header p {
+            color: #8892b0;
+            font-size: 0.9em;
+        }
+
+        .chart-frame {
+            width: 100%;
+            height: 550px;
+            border: none;
+            background: white;
+        }
+
+        .chart-frame-tall {
+            height: 750px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #8892b0;
+            font-size: 0.9em;
+            border-top: 1px solid #2d3561;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #64ffda;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🎬 Movies Analytics Dashboard</h1>
+    <p>
+        End-to-end ETL pipeline analyzing 543 films across genres,
+        countries and decades — from raw CSV to interactive analytics.
+    </p>
+    <div class="tech-stack">
+        <span class="badge">Python</span>
+        <span class="badge">AWS S3</span>
+        <span class="badge">PostgreSQL</span>
+        <span class="badge">dbt</span>
+        <span class="badge">SQLAlchemy</span>
+        <span class="badge">Plotly</span>
+        <span class="badge">Airflow</span>
+        <span class="badge">Docker</span>
+        <span class="badge">Snowflake</span>
+    </div>
+</header>
+
+<div class="pipeline">
+    <h2>Pipeline Architecture</h2>
+    <div class="pipeline-flow">
+        <span class="pipeline-step">📦 AWS S3</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-step">🐍 Extract</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-step">🔄 Transform</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-step">🐘 PostgreSQL</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-step">⚙️ dbt</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-step">❄️ Snowflake</span>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-step">📊 Plotly</span>
+    </div>
+</div>
+
+<div class="stats">
+    <div class="stat-item">
+        <div class="stat-number">543</div>
+        <div class="stat-label">Films Analyzed</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">25</div>
+        <div class="stat-label">Unique Genres</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">29</div>
+        <div class="stat-label">Countries</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">1942</div>
+        <div class="stat-label">Years Covered (1925–2023)</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">5</div>
+        <div class="stat-label">dbt Models</div>
+    </div>
+</div>
+
+<div class="charts-grid">
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <h3>Top 10 Genres by Total Box Office Revenue</h3>
+            <p>Which genres generate the most revenue?
+               Color intensity shows average ROI.</p>
+        </div>
+        <iframe class="chart-frame"
+                src="01_genre_revenue.html"></iframe>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <h3>Budget vs Box Office Revenue</h3>
+            <p>Correlation between investment and returns.
+               Color shows ROI category, size shows box office revenue.</p>
+        </div>
+        <iframe class="chart-frame"
+                src="02_budget_vs_revenue.html"></iframe>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <h3>Top 10 Movies by Box Office Revenue</h3>
+            <p>Highest grossing films in the dataset.</p>
+        </div>
+        <iframe class="chart-frame"
+                src="03_top_movies.html"></iframe>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <h3>Top Countries: ROI and Average Box Office</h3>
+            <p>Countries with more than 3 films.
+               Which nations produce the most profitable movies?</p>
+        </div>
+        <iframe class="chart-frame"
+                src="04_country_analysis.html"></iframe>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <h3>Average ROI by Genre</h3>
+            <p>Return on investment across all genres.
+               Green = high ROI, Red = low or negative ROI.</p>
+        </div>
+        <iframe class="chart-frame chart-frame-tall"
+                src="05_roi_by_genre.html"></iframe>
+    </div>
+
+</div>
+
+<footer>
+    <p>
+        Built with Python, dbt, PostgreSQL, AWS S3, Snowflake and Plotly
+        ·
+        <a href="https://github.com/ivanadjuricic/movies-etl-pipeline"
+           target="_blank">View on GitHub</a>
+    </p>
+</footer>
+
+</body>
+</html>
