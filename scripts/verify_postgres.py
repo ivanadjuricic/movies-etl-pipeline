@@ -41,3 +41,25 @@ with engine.connect() as conn:
     ).scalar()
     print(f"movies: {movies_count} redova")
     print(f"movie_genres: {genres_count} redova")
+    
+
+
+    print("\n--- Top 5 žanrova po zaradi (iz dbt mart tabele) ---")
+    result = conn.execute(text("""
+            SELECT genre, movie_count, avg_roi, total_box_office, revenue_rank
+            FROM analytics.mart_genre_analysis
+            ORDER BY revenue_rank
+            LIMIT 5;
+        """))
+    for row in result:
+            print(row)
+
+    print("\n--- Top 5 zemalja po zaradi (iz dbt mart tabele) ---")
+    result = conn.execute(text("""
+            SELECT country, movie_count, avg_roi, total_box_office, revenue_rank
+            FROM analytics.mart_country_analysis
+            ORDER BY revenue_rank
+            LIMIT 5;
+        """))
+    for row in result:
+            print(row)

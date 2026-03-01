@@ -1,0 +1,22 @@
+name: 'movies_dbt'
+version: '1.0.0'
+
+profile: 'movies_dbt'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  movies_dbt:
+    staging:
+      +materialized: view      # staging modeli su views — brzi, ne zauzimaju disk
+    marts:
+      +materialized: table     # marts modeli su tabele — spremni za vizualizaciju

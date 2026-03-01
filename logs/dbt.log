@@ -1,0 +1,30 @@
+[0m22:42:50.102142 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000272E3750980>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000272E4897ED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000272E4897B10>]}
+
+
+============================== 22:42:50.108066 | 00e9f083-4831-4a23-b07b-ad8424d01ef3 ==============================
+[0m22:42:50.108066 [info ] [MainThread]: Running with dbt=1.11.6
+[0m22:42:50.108791 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\ivadj\\.dbt', 'invocation_command': 'dbt init movies_dbt', 'use_colors': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'logs'}
+[0m22:42:50.139983 [info ] [MainThread]: Creating dbt configuration folder at C:\Users\ivadj\.dbt
+[0m22:42:50.142643 [debug] [MainThread]: Starter project path: C:\MY DOCUMENTS\Projects for programers roles\movies-etl-pipeline\venv\Lib\site-packages\dbt\include\starter_project
+[0m22:42:50.171201 [info ] [MainThread]: 
+Your new dbt project "movies_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m22:42:50.172057 [info ] [MainThread]: Setting up your profile.
+[0m22:51:47.000092 [info ] [MainThread]: Profile movies_dbt written to C:\Users\ivadj\.dbt\profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m22:51:47.001399 [debug] [MainThread]: Command `dbt init` succeeded at 22:51:47.001239 after 537.02 seconds
+[0m22:51:47.001776 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000272E5A05A70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000272E5A48050>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000272E47F5590>]}
+[0m22:51:47.002175 [debug] [MainThread]: Flushing usage events
+[0m22:51:47.845122 [debug] [MainThread]: An error was encountered while trying to flush usage events

@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: public
+    database: movies
+    schema: public
+    tables:
+      - name: movies
+        description: "Raw movies table loaded from S3 CSV"
+      - name: movie_genres
+        description: "Normalized movie genres table"
