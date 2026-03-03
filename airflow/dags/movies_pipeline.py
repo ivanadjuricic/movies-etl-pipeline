@@ -60,8 +60,8 @@ with DAG(
         """Run dbt models to create analytics tables."""
         import subprocess
         result = subprocess.run(
-            ['dbt', 'run', '--project-dir', '/opt/airflow/dbt/movies_dbt',
-             '--profiles-dir', '/opt/airflow/dbt'],
+            ['dbt', 'run', '--project-dir', '/opt/airflow/movies_dbt',
+             '--profiles-dir', '/opt/airflow/movies_dbt'],
             capture_output=True,
             text=True
         )
