@@ -1,7 +1,39 @@
+version: '3.8'
+
+x-airflow-common:
+  &airflow-common
+  image: apache/airflow:2.8.1
+  environment:
+    &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:movies123@postgres/airflow
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
+    # Our pipeline environment variables
+    DB_USER: postgres
+    DB_PASSWORD: movies123
+    DB_HOST: postgres
+    DB_PORT: 5432
+    DB_NAME: movies
+    AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+    AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    AWS_BUCKET_NAME: ${AWS_BUCKET_NAME}
+    AWS_REGION: ${AWS_REGION}
+  volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./etl:/opt/airflow/etl
+    - airflow_logs:/opt/airflow/logs
+  depends_on:
+    postgres:
+      condition: service_healthy
+
 services:
   postgres:
     image: postgres:15
     container_name: movies_postgres
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: movies123
@@ -10,6 +42,54 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      retries: 5
+
+  airflow-init:
+    <<: *airflow-common
+    container_name: airflow_init
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        airflow db init &&
+        airflow db upgrade &&
+        airflow users create \
+          --username admin \
+          --firstname Admin \
+          --lastname User \
+          --role Admin \
+          --email admin@example.com \
+          --password admin
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_UPGRADE: 'true'
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+    restart: on-failure
+
+  airflow-webserver:
+    <<: *airflow-common
+    container_name: airflow_webserver
+    restart: always
+    ports:
+      - "8080:8080"
+    command: >
+      bash -c "pip install dbt-postgres==1.7.0 && airflow webserver"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  airflow-scheduler:
+    <<: *airflow-common
+    container_name: airflow_scheduler
+    restart: always
+    command: >
+      bash -c "pip install dbt-postgres==1.7.0 && airflow scheduler"
 
 volumes:
   postgres_data:
+  airflow_logs:
