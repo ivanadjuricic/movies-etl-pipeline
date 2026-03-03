@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from typing import Tuple
 
 
 # Mapping of typos and non-standard genre names to standardized values
@@ -48,7 +49,7 @@ def clean_genres(genre_string: str) -> list:
     return unique_genres
 
 
-def transform(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def transform(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Main transformation function.
 
