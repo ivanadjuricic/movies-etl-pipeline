@@ -26,7 +26,7 @@ def create_tables(engine) -> None:
     because we want proper data types and constraints (PRIMARY KEY, FOREIGN KEY).
     This is the professional approach — always control your schema.
     """
-    with engine.connect() as conn:
+    with engine.begin() as conn:
         conn.execute(text("""
             CREATE TABLE IF NOT EXISTS movies (
                 id          SERIAL PRIMARY KEY,
@@ -50,7 +50,6 @@ def create_tables(engine) -> None:
             );
         """))
 
-        conn.commit()
         print("Tables created successfully (or already exist).")
 
 
@@ -75,26 +74,30 @@ def load_to_postgres(df_movies: pd.DataFrame,
 
     # Step 2: Load movies table
     print(f"Loading {len(df_movies)} rows into movies table...")
+    with engine.begin() as conn:
+        conn.execute(text("TRUNCATE TABLE movies CASCADE"))
     df_movies.to_sql(
         name='movies',
         con=engine,
-        if_exists='replace',
+        if_exists='append',   # ← replace → append
         index=False
     )
     print("movies table loaded successfully.")
 
     # Step 3: Load movie_genres table
     print(f"Loading {len(df_movie_genres)} rows into movie_genres table...")
+    with engine.begin() as conn:
+        conn.execute(text("TRUNCATE TABLE movie_genres CASCADE"))
     df_movie_genres.to_sql(
         name='movie_genres',
         con=engine,
-        if_exists='replace',
+        if_exists='append',   # ← replace → append
         index=False
     )
     print("movie_genres table loaded successfully.")
 
     # Step 4: Verify row counts match what we loaded
-    with engine.connect() as conn:
+    with engine.begin() as conn:  # ← connect() → begin()
         movies_count = conn.execute(
             text("SELECT COUNT(*) FROM movies")
         ).scalar()
