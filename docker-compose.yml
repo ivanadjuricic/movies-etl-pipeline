@@ -24,6 +24,7 @@ x-airflow-common:
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - ./etl:/opt/airflow/etl
+    - ./movies_dbt:/opt/airflow/movies_dbt
     - airflow_logs:/opt/airflow/logs
   depends_on:
     postgres:
