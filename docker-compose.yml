@@ -77,7 +77,7 @@ services:
     ports:
       - "8080:8080"
     command: >
-      bash -c "pip install dbt-postgres==1.7.0 && airflow webserver"
+      bash -c "pip install dbt-postgres==1.10.0 && airflow webserver"
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 30s
@@ -89,7 +89,7 @@ services:
     container_name: airflow_scheduler
     restart: always
     command: >
-      bash -c "pip install dbt-postgres==1.7.0 && airflow scheduler"
+      bash -c "pip install dbt-postgres==1.10.0 && airflow scheduler"
 
 volumes:
   postgres_data:
