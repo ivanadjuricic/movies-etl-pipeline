@@ -29,6 +29,7 @@ jobs:
           python -m py_compile etl/extract.py
           python -m py_compile etl/transform.py
           python -m py_compile etl/load_postgres.py
+          python -m py_compile etl/load_snowflake.py
           echo "All ETL files passed syntax check!"
 
       - name: Validate dbt project structure
