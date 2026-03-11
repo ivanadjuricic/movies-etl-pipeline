@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 .DS_Store
 movies_dbt/.user.yml
+.vscode/
